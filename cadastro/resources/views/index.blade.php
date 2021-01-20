@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.app', ["current" => "home"])
 
 @section('body')
     
@@ -11,7 +11,7 @@
                         <p class="card-text">
                             Aqui vc cadastra os produtos
                         </p>
-                        <a href="/produtos" class="btn btn-primary">Cadastrar Produtos</a>
+                        <a href="{{ route('produtos') }}" class="btn btn-primary">Cadastrar Produtos</a>
                     </div>
                 </div>
                 <div class="card border border-primary">
@@ -20,7 +20,7 @@
                         <p class="card-text">
                             Aqui vc cadastra as categorias
                         </p>
-                        <a href="/categorias" class="btn btn-primary">Cadastrar Categorias</a>
+                        <a href="{{ route('categorias') }}" class="btn btn-primary">Cadastrar Categorias</a>
                     </div>
                 </div>
                 

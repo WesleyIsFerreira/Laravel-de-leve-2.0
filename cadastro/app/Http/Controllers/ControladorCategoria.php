@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use Illuminate\Http\Request;
+
 
 class ControladorCategoria extends Controller
 {
@@ -13,7 +15,8 @@ class ControladorCategoria extends Controller
      */
     public function index()
     {
-        return view('categorias');
+        $categorias = Categorias::all();
+        return view('categorias', compact('categorias'));
     }
 
     /**
@@ -23,7 +26,7 @@ class ControladorCategoria extends Controller
      */
     public function create()
     {
-        //
+        return view('novaCategoria');
     }
 
     /**
@@ -34,7 +37,10 @@ class ControladorCategoria extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cat = new Categorias();
+        $cat->nome = $request->input('nomeCategoria');
+        $cat->save();
+        return redirect('/categorias');
     }
 
     /**
@@ -56,7 +62,11 @@ class ControladorCategoria extends Controller
      */
     public function edit($id)
     {
-        //
+        $cat = Categorias::find($id);
+        if (isset($cat)){
+            return view('editarCategoria', compact('cat'));
+        }
+        return redirect('/categorias');
     }
 
     /**
@@ -68,7 +78,12 @@ class ControladorCategoria extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cat = Categorias::find($id);
+        if (isset($cat)){
+            $cat->nome = $request->input('nomeCategoria');
+            $cat->save();
+        }
+        return redirect('/categorias');
     }
 
     /**
@@ -79,6 +94,13 @@ class ControladorCategoria extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cat = Categorias::find($id);
+        if (isset($cat)){
+            $cat->delete();
+        }else{
+            throw 'Moio';
+        }
+        return redirect('/categorias');
+
     }
 }

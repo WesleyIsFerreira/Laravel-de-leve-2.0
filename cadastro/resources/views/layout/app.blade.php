@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <x-nav-bar>
+    <x-nav-bar :current="$current">
     </x-nav-bar>
     <div class="container">
         <main role="main">

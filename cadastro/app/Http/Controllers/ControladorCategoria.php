@@ -16,7 +16,7 @@ class ControladorCategoria extends Controller
     public function index()
     {
         $categorias = Categorias::all();
-        return view('categorias', compact('categorias'));
+        return view('categoria.categorias', compact('categorias'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ControladorCategoria extends Controller
      */
     public function create()
     {
-        return view('novaCategoria');
+        return view('categoria.novaCategoria');
     }
 
     /**
@@ -64,7 +64,7 @@ class ControladorCategoria extends Controller
     {
         $cat = Categorias::find($id);
         if (isset($cat)){
-            return view('editarCategoria', compact('cat'));
+            return view('categoria.editarCategoria', compact('cat'));
         }
         return redirect('/categorias');
     }
@@ -101,6 +101,5 @@ class ControladorCategoria extends Controller
             throw 'Moio';
         }
         return redirect('/categorias');
-
     }
 }

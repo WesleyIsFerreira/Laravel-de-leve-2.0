@@ -2,7 +2,6 @@
 
 @section('body')
 
-
     <div class="card border">
         <div class="card-body">
             <h5 class="card-title">Cadastro de Categorias</h5>

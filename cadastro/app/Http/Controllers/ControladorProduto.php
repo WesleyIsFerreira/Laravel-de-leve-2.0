@@ -16,7 +16,7 @@ class ControladorProduto extends Controller
     public function index()
     {
         $produtos = Produtos::all();
-        dd($produtos);
+        //dd($produtos);
         return view('produtos', compact('produtos'));
     }
 

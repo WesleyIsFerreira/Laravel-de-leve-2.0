@@ -45,6 +45,7 @@ class ControladorProduto extends Controller
         $prod->preco = $request->input('preco');
         $prod->estoque = $request->input('estoque');
         $prod->categoria_id = $request->input('idMarca');
+        //dd($prod);
         $prod->save();
         return redirect('/produtos');
     }

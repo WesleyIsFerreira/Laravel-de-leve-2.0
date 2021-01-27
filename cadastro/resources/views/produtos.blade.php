@@ -10,7 +10,10 @@
                     <thead>
                         <tr>
                             <td>Código</td>
-                            <td>Nome da Produtos</td>
+                            <td>Nome</td>
+                            <td>Quantidade</td>
+                            <td>Preço</td>
+                            <td>Departamento</td>
                             <td>Ações</td>
                         </tr>
                     </thead>
@@ -19,6 +22,9 @@
                             <tr>
                                 <td>{{$produto->id}}</td>
                                 <td>{{$produto->nome}}</td>
+                                <td>{{$produto->estoque}}</td>
+                                <td>{{$produto->preco}}</td>
+                                <td>{{$produto->categoria_id}}</td>
                                 <td>
                                     <a href="/produtos/editar/{{$produto->id}}" class="btn btn-sm btn-primary">Edit</a>
                                     <a href="/produtos/apagar/{{$produto->id}}" class="btn btn-sm btn-danger">Del</a>
@@ -91,8 +97,8 @@
             
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </div>
     </form>

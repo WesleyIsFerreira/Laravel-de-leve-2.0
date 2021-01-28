@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categorias;
 use App\Models\Produtos;
 use Illuminate\Http\Request;
+use Symfony\Component\Finder\Finder;
 
 class ControladorProduto extends Controller
 {
@@ -41,13 +42,13 @@ class ControladorProduto extends Controller
     public function store(Request $request)
     {
         $prod = new Produtos();
-        $prod->nome = $request->input('nomeProduto');
+        $prod->nome = $request->input('nome');
         $prod->preco = $request->input('preco');
         $prod->estoque = $request->input('estoque');
         $prod->categoria_id = $request->input('idMarca');
         //dd($prod);
         $prod->save();
-        return redirect('/produtos');
+        return json_encode($prod);
     }
 
     /**
@@ -58,7 +59,11 @@ class ControladorProduto extends Controller
      */
     public function show($id)
     {
-        //
+        $prod = Produtos::find($id);
+        if (isset($prod)){
+            return json_encode($prod);
+        }
+        return response('Produto não encontrado', 404);
     }
 
     /**
@@ -81,7 +86,16 @@ class ControladorProduto extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $prod = Produtos::find($id);
+        if (isset($prod)){
+            $prod->nome = $request->input('nome');
+            $prod->preco = $request->input('preco');
+            $prod->estoque = $request->input('estoque');
+            $prod->categoria_id = $request->input('idMarca');
+            $prod->save();
+            return json_encode($prod);
+        }
+        return response('Produto não encontrado', 404);
     }
 
     /**
@@ -92,6 +106,11 @@ class ControladorProduto extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produto = Produtos::find($id);
+        if (isset($produto)){
+            $produto->delete();
+            return response('OK', 200);
+        }
+        return response('Produto não encontrado', 404);
     }
 }

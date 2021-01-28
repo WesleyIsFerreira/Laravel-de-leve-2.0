@@ -20,33 +20,20 @@ Route::get('/', function () {
 })->name('home');
 
 Route::prefix('categorias')->group(function () {
-
     Route::get('/', [ControladorCategoria::class, 'index'])->name('categorias');
-
     Route::get('/novo', [ControladorCategoria::class, 'create'])->name('categorias.create');
-
     Route::get('/apagar/{id}', [ControladorCategoria::class, 'destroy'])->name('categorias.destroy');
-
     Route::get('/editar/{id}', [ControladorCategoria::class, 'edit'])->name('categorias.edit');
-
     Route::post('/', [ControladorCategoria::class, 'store'])->name('categorias.store');
-
     Route::post('/editar/{id}', [ControladorCategoria::class, 'update'])->name('categorias.update');
-    
 });
 
 Route::prefix('produtos')->group(function () {
-
     Route::get('/', [ControladorProduto::class, 'index'])->name('produtos');
-
     Route::get('/novo', [ControladorProduto::class, 'create'])->name('produtos.create');
-
     Route::get('/apagar/{id}', [ControladorProduto::class, 'destroy'])->name('produtos.destroy');
-
     Route::get('/editar/{id}', [ControladorProduto::class, 'edit'])->name('produtos.edit');
-
     Route::post('/', [ControladorProduto::class, 'store'])->name('produtos.store');
-
     Route::post('/editar/{id}', [ControladorProduto::class, 'update'])->name('produtos.update');
-
+    Route::get('/{id}', [ControladorProduto::class, 'show'])->name('produtos.show');
 });

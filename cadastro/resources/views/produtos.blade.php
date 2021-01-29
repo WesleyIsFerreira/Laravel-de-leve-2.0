@@ -5,6 +5,7 @@
     <div class="card border">
         <div class="card-body">
             <h5 class="card-title">Cadastro de Produtos</h5>
+            
             @if (count($produtos) > 0)
                 <table id="tabelaProduto" class="table table-ordered table-hover">
                     <thead>
@@ -60,6 +61,8 @@
                 <div class="form-group">
                         @if (count($categorias) > 0)
 
+                            <input hidden type="text" name="id" id="id">
+
                             <label for="nomeProduto">Nome do Produto</label>
                             <input type="text" class="form-control" name="nomeProduto"
                             id="nomeProduto" placeholder="Produto">
@@ -104,6 +107,20 @@
     </form>
   </div>
 </div>
+
+<!-- toast -->
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="mr-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
     
 @endsection
 
@@ -117,36 +134,68 @@
 
         function salvarProduto(){
             prod = {
+                id: $("#id").val(),
                 preco: $("#preco").val(),
                 nome: $("#nomeProduto").val(),
                 estoque: $("#estoque").val(),
                 idMarca: $("#idMarca").val()
             };
             
-            $.post("/produtos", prod, function(data) {
-                produto = JSON.parse(data);
-                linha = montarLinha(produto);
-                $("#tabelaProduto>tbody").append(linha);
-            });
+            if  (prod.id){
+                $.post("produtos/editar/" + prod.id, prod, function(data) {
+                    produto = JSON.parse(data);
+                    
+                    linhas = $("#tabelaProduto>tbody>tr");
 
-            $("#produtoModal").modal('hide')
+                    e = linhas.filter( function(i,e){
+                        return (e.cells[0].textContent == produto.id)
+                    })
+
+                    if (e) {
+                        e[0].cells[1].textContent = produto.nome;
+                        e[0].cells[2].textContent = produto.estoque;
+                        e[0].cells[3].textContent = produto.preco;
+                        e[0].cells[4].textContent = produto.categoria_id;
+                    }
+                });
+            } else {
+                $.post("/produtos", prod, function(data) {
+                    produto = JSON.parse(data);
+                    linha = montarLinha(produto);
+                    $("#tabelaProduto>tbody").append(linha);
+                });
+            }
+
+            
+            
+            $("#produtoModal").modal('hide');
         }
+
+        $("#produtoModal").on("hidden.bs.modal", function () {
+            $("#id").val(''),
+            $("#preco").val(''),
+            $("#nomeProduto").val(''),
+            $("#estoque").val(''),
+            $("#idMarca").val('')
+        });
 
         function montarLinha(p){
 
-            let linha = "<tr>" +
-                "<td>" + p.id + "</td>" +
-                "<td>" + p.nome + "</td>" +
-                "<td>" + p.estoque + "</td>" +
-                "<td>" + p.preco + "</td>" +
-                "<td>" + p.categoria + "</td>" +
-                "<td>"+
-                    '<button class="btn btn-sm btn-primary" onclick="editar('+  p.id +')" >Edit</button>' +
-                    '<button class="btn btn-sm btn-danger" onclick="apagar('+  p.id +')" >Apagar</button>' +
-                "</td>"+
-                "</tr>";
+            console.log(p);
 
-                return linha;
+            let linha = "<tr>" +
+                            "<td>" + p.id + "</td>" +
+                            "<td>" + p.nome + "</td>" +
+                            "<td>" + p.estoque + "</td>" +
+                            "<td>" + p.preco + "</td>" +
+                            "<td>" + p.categoria_id + "</td>" +
+                            "<td>"+
+                                '<button class="btn btn-sm btn-primary" onclick="editar('+  p.id +')" >Edit</button>' +
+                                '<button class="btn btn-sm btn-danger" onclick="apagar('+  p.id +')" >Apagar</button>' +
+                            "</td>"+
+                        "</tr>";
+
+            return linha;
         }
 
         function apagar(id){
@@ -155,21 +204,30 @@
                 url: "/produtos/apagar/" + id,
                 context: this,
                 success: function(){
-                    console.log("Apagou a parada");
+                    linhas = $("#tabelaProduto>tbody>tr");
+                    e = linhas.filter( function(i,e){
+                        return (e.cells[0].textContent == id)
+                    })
+                    e.remove();
                 },
                 error: function(){
                     console.log("Deu pau");
                 }
             });
         }
-
         function editar(id){
             linhas = $("#tabelaProduto>tbody>tr");
             e = linhas.filter( function(i,e){
                 return (e.cells[0].textContent == id)
             })
-            console.log(e);
+            if (e) {
+                $("#produtoModal").modal('show');
+                $("#id").val(e[0].cells[0].textContent);
+                $("#nomeProduto").val(e[0].cells[1].textContent);
+                $("#estoque").val(e[0].cells[2].textContent);
+                $("#preco").val(e[0].cells[3].textContent);
+                $("#idMarca").val(e[0].cells[4].textContent);
+            }
         }
-
     </script>
 @endsection

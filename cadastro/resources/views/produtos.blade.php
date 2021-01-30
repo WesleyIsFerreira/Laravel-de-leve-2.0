@@ -6,19 +6,20 @@
         <div class="card-body">
             <h5 class="card-title">Cadastro de Produtos</h5>
             
-            @if (count($produtos) > 0)
-                <table id="tabelaProduto" class="table table-ordered table-hover">
-                    <thead>
-                        <tr>
-                            <td>Código</td>
-                            <td>Nome</td>
-                            <td>Quantidade</td>
-                            <td>Preço</td>
-                            <td>Departamento</td>
-                            <td>Ações</td>
-                        </tr>
-                    </thead>
-                    <tbody>
+            
+            <table id="tabelaProduto" class="table table-ordered table-hover">
+                <thead>
+                    <tr>
+                        <td>Código</td>
+                        <td>Nome</td>
+                        <td>Quantidade</td>
+                        <td>Preço</td>
+                        <td>Departamento</td>
+                        <td>Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (count($produtos) > 0)
                         @foreach ($produtos as $produto)
                             <tr>
                                 <td>{{$produto->id}}</td>
@@ -32,9 +33,9 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
-            @endif
+                    @endif
+                </tbody>
+            </table>
 
         </div>
         <div class="card-footer">
@@ -67,16 +68,13 @@
                             <input type="text" class="form-control" name="nomeProduto"
                             id="nomeProduto" placeholder="Produto">
                             
-
                             <label for="preco">Preço</label>
                             <input type="number" class="form-control" name="preco"
                             id="preco" placeholder="Preço">
                             
-
                             <label for="estoque">Estoque</label>
                             <input type="number" class="form-control" name="estoque"
                             id="estoque" placeholder="Estoque">
-                            
 
                             <label for="nomeMarca">Nome da Marca</label>
                             
@@ -107,25 +105,12 @@
     </form>
   </div>
 </div>
-
-<!-- toast -->
-<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong class="mr-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
     
 @endsection
 
 @section('javascript')
     <script>
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -181,8 +166,6 @@
 
         function montarLinha(p){
 
-            console.log(p);
-
             let linha = "<tr>" +
                             "<td>" + p.id + "</td>" +
                             "<td>" + p.nome + "</td>" +
@@ -199,21 +182,43 @@
         }
 
         function apagar(id){
-            $.ajax({
-                type: "HEAD",
-                url: "/produtos/apagar/" + id,
-                context: this,
-                success: function(){
-                    linhas = $("#tabelaProduto>tbody>tr");
-                    e = linhas.filter( function(i,e){
-                        return (e.cells[0].textContent == id)
-                    })
-                    e.remove();
-                },
-                error: function(){
-                    console.log("Deu pau");
-                }
-            });
+
+            cuteAlert({
+                type: "question",
+                title: "Vai mesmo apagar a parada ?",
+                message: "Então se olha e clicka? Cê é o bixão memu heim doido..",
+                confirmText: "Vou sim",
+                cancelText: "Deixa pra lá"
+              }).then((e)=>{
+                if ( e == ("confirm")){
+                    $.ajax({
+                        type: "HEAD",
+                        url: "/produtos/apagar/" + id,
+                        context: this,
+                        success: function(){
+        
+                            cuteToast({
+                                type: "success", // or 'info', 'error', 'warning'
+                                message: "Produto excluido com sucesso",
+                                timer: 5000
+                              })
+        
+                            linhas = $("#tabelaProduto>tbody>tr");
+                            e = linhas.filter( function(i,e){
+                                return (e.cells[0].textContent == id)
+                            })
+                            e.remove();
+                        },
+                        error: function(){
+                            console.log("Deu pau");
+                        }
+                    });
+              }
+              });
+
+              return;
+
+            
         }
         function editar(id){
             linhas = $("#tabelaProduto>tbody>tr");
@@ -229,5 +234,6 @@
                 $("#idMarca").val(e[0].cells[4].textContent);
             }
         }
+
     </script>
 @endsection

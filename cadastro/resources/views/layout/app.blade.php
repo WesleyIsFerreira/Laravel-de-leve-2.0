@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <title>Cadastro de Produtos</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('cute-alert-master/style.css') }}">
     <style>
         body{
             margin-top: 20px;
@@ -24,6 +25,7 @@
         </main>
     </div>
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('cute-alert-master/cute-alert.js') }}" type="text/javascript"></script>
 
     @hasSection ('javascript')
         @yield('javascript')  

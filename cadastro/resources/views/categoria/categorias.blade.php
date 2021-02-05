@@ -34,5 +34,18 @@
             <a href="/categorias/novo" class="btn btn-sm btn-primary" role="bitton">Nova Categoria</a>
         </div>
     </div>
-    
+
+    <div class="row" style="margin-top: 20px">
+        @foreach  ($categorias as $categoria)
+        <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">{{$categoria->nome}}</li>
+                @foreach ($categoria->produto as $produto)
+                    <li class="list-group-item">{{$produto->nome}}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endforeach
+    </div>
+
 @endsection

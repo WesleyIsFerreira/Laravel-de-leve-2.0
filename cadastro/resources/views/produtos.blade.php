@@ -6,7 +6,6 @@
         <div class="card-body">
             <h5 class="card-title">Cadastro de Produtos</h5>
             
-            
             <table id="tabelaProduto" class="table table-ordered table-hover">
                 <thead>
                     <tr>
@@ -20,13 +19,14 @@
                 </thead>
                 <tbody>
                     @if (count($produtos) > 0)
+                    
                         @foreach ($produtos as $produto)
                             <tr>
                                 <td>{{$produto->id}}</td>
                                 <td>{{$produto->nome}}</td>
                                 <td>{{$produto->estoque}}</td>
                                 <td>{{$produto->preco}}</td>
-                                <td>{{$produto->categoria_id}}</td>
+                                <td>{{$produto->categoria->nome}}</td>
                                 <td>
                                     <button class="btn btn-sm btn-primary" onclick="editar( {{$produto->id}} )" >Edit</button>
                                     <button class="btn btn-sm btn-danger" onclick="apagar( {{$produto->id}} )" >Apagar</button>
@@ -125,7 +125,7 @@
                 estoque: $("#estoque").val(),
                 idMarca: $("#idMarca").val()
             };
-            
+    
             if  (prod.id){
                 $.post("produtos/editar/" + prod.id, prod, function(data) {
                     produto = JSON.parse(data);

@@ -16,7 +16,7 @@ class ControladorProduto extends Controller
      */
     public function index()
     {
-        $produtos = Produtos::all();
+        $produtos = Produtos::with(['categoria'])->get();
         $categorias = Categorias::all();
         //dd($produtos);
         return view('produtos', compact('produtos', 'categorias'));

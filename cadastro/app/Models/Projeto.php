@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Produtos extends Model
+class Projeto extends Model
 {
     use HasFactory;
-
-    function categoria(){
-        return $this->belongsTo(Categorias::class);
-    }
 }

@@ -10,6 +10,8 @@ class Produtos extends Model
     use HasFactory;
 
     function categoria(){
+        //Um pra muitos
+        //Um produto pertence uma categoria
         return $this->belongsTo(Categorias::class);
     }
 }

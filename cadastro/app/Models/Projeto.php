@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Projeto extends Model
 {
     use HasFactory;
+
+    function desenvolvedor(){
+        //De muitos pra muitos
+        //Um projeto pertence a muitos desenvolvedores
+        return $this->belongsToMany(Desenvolvedor::class, 'locacoes')->withPivot('horas_semanais');
+    }
 }

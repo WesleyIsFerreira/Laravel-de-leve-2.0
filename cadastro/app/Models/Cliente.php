@@ -11,6 +11,8 @@ class Cliente extends Model
     use HasFactory;
 
     function endereco(){
+        //Um pra um
+        //Um endereço pertence a um cliente
         return $this->hasOne(Endereco::class);
     }
 

@@ -3,7 +3,9 @@
 use App\Http\Controllers\ControladorCategoria;
 use App\Http\Controllers\ControladorProduto;
 use App\Models\Cliente;
+use App\Models\Desenvolvedor;
 use App\Models\Endereco;
+use App\Models\Projeto;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +46,7 @@ Route::prefix('produtos')->group(function () {
 Route::get('/clientes', function() {
     $clientes = Cliente::all();
     foreach($clientes as $c){
+
         echo "<p>Id: ". $c->id ."</p>";
         echo "<p>Nome: ". $c->nome ."</p>";
         echo "<p>Telefone: ". $c->telefone ."</p>";
@@ -55,21 +58,31 @@ Route::get('/clientes', function() {
         echo "<p>Uf: ". $c->endereco->uf ."</p>";
         echo "<p>CEP: ". $c->endereco->cep ."</p>";
         echo "<hr>";
+
     }
 
+});
+
+
+Route::get('/desenvolvedor', function() {
+    $desenvolvedor = Desenvolvedor::with(['projeto'])->get();
+    return $desenvolvedor->toJson();
+});
+
+Route::get('/projeto', function() {
+    $projetos = Projeto::with(['desenvolvedor'])->get();
+    return $projetos->toJson();
 });
 
 
 Route::get('/clientes/json', function() {
     $clientes = Cliente::with(['endereco'])->get();
     return $clientes->toJson();
-    
 });
 
 Route::get('/endereco/json', function() {
     $endereco = Endereco::with(['cliente'])->get();
     return $endereco->toJson();
-    
 });
 
 //Rota pra inseriri uns registros para teste
@@ -89,7 +102,6 @@ Route::get('/inserir', function() {
     $e->cep = "14840000";
 
     $c->endereco()->save($e);
-    
 
     $c = new Cliente();
     $c->nome = "Julia da costa";
@@ -106,3 +118,19 @@ Route::get('/inserir', function() {
     $c->endereco()->save($e);
 
 });
+
+//Inserido em Tabela de M pra N
+Route::get('alocacao', function() {
+    $dev = Desenvolvedor::find(4);
+    if(isset($dev)){
+        //$dev->projeto()->attach(1, ['horas_semanais' => 50]);
+
+        $dev->projeto()->attach([
+            2 => ['horas_semanais' => 20],
+            3 => ['horas_semanais' => 30],
+        ]);
+    }
+
+
+});
+

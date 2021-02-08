@@ -14,6 +14,13 @@ class ControladorProduto extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('primeiro');
+        $this->middleware('login');
+    }
+
     public function index()
     {
         $produtos = Produtos::with(['categoria'])->get();

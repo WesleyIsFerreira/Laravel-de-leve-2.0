@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\ControladorCategoria;
 use App\Http\Controllers\ControladorProduto;
+use App\Http\Controllers\controladorUsuario;
+use App\Http\Middleware\PrimeiroMiddleware;
 use App\Models\Cliente;
 use App\Models\Desenvolvedor;
 use App\Models\Endereco;
 use App\Models\Projeto;
+//use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +25,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-})->name('home');
+})->name('home')->middleware('login');
+
+Route::prefix('usuarios')->group(function (){
+    //antes de cadastrar Middleware no kernel
+    //Route::get('/', [controladorUsuario::class, 'index'])->name('index')->middleware(PrimeiroMiddleware::class);
+    
+    //depois de cadastrar Middleware no kernel
+    Route::get('/', [controladorUsuario::class, 'index'])->name('index')->middleware('primeiro');
+
+    //colocando Middlewareno controller
+    Route::post('/', [controladorUsuario::class, 'login'])->name('login');
+
+
+});
 
 Route::prefix('categorias')->group(function () {
     Route::get('/', [ControladorCategoria::class, 'index'])->name('categorias');
@@ -138,4 +155,9 @@ Route::get('/desalocacao', function() {
     if(isset($dev)){
         $dev->projeto()->detach([7,8]);
     }
+});
+
+Route::get('/logout', function(Request $req) {
+    $req->session()->flush();
+    return redirect('/usuarios');
 });

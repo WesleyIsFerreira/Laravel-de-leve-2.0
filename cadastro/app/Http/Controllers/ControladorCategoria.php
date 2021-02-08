@@ -13,6 +13,13 @@ class ControladorCategoria extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('primeiro');
+        $this->middleware('login');
+    }
+
     public function index()
     {
         $categorias = Categorias::with(['produto'])->get();

@@ -120,17 +120,22 @@ Route::get('/inserir', function() {
 });
 
 //Inserido em Tabela de M pra N
-Route::get('alocacao', function() {
+Route::get('/alocacao', function() {
     $dev = Desenvolvedor::find(4);
     if(isset($dev)){
-        //$dev->projeto()->attach(1, ['horas_semanais' => 50]);
-
+        //$dev->projeto()->attach(6, ['horas_semanais' => 50]);
         $dev->projeto()->attach([
-            2 => ['horas_semanais' => 20],
-            3 => ['horas_semanais' => 30],
+            7 => ['horas_semanais' => 20],
+            8 => ['horas_semanais' => 30],
         ]);
     }
-
-
 });
 
+//Desalocando registros de M pra N
+
+Route::get('/desalocacao', function() {
+    $dev = Desenvolvedor::find(4);
+    if(isset($dev)){
+        $dev->projeto()->detach([7,8]);
+    }
+});

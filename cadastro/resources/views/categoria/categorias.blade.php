@@ -2,6 +2,15 @@
 
 @section('body')
 
+    <div>
+        <p>
+            100% blade, até mesmo os bugs do designe no "$categorias->links()"
+        </p>
+        <p>
+            Problemas resolvidos na pag Categorias2
+        </p>
+    </div>
+
     <div class="card border">
         <div class="card-body">
             <h5 class="card-title">Cadastro de Categorias</h5>
@@ -31,7 +40,14 @@
 
         </div>
         <div class="card-footer">
-            <a href="/categorias/novo" class="btn btn-sm btn-primary" role="bitton">Nova Categoria</a>
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <a href="/categorias/novo" class="btn btn-sm btn-primary" role="bitton">Nova Categoria</a>
+                </div>
+                <div class="col-2">
+                  {{ $categorias->links() }}
+                </div>
+              </div>
         </div>
     </div>
 

@@ -12,6 +12,9 @@
           <li @if($current == "produtos") class="nav-item active" @else class="nav-item" @endif>
             <a class="nav-link" aria-current="page" href="{{ route('produtos') }}">Produtos</a>
           </li>
+          <li @if($current == "categorias2") class="nav-item active" @else class="nav-item" @endif>
+            <a class="nav-link" aria-current="page" href="{{ route('categorias2') }}">Categorias2</a>
+          </li>
         </ul>
       </div>
     </div>

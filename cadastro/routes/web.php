@@ -42,11 +42,14 @@ Route::prefix('usuarios')->group(function (){
 
 Route::prefix('categorias')->group(function () {
     Route::get('/', [ControladorCategoria::class, 'index'])->name('categorias');
+    Route::get('/2', [ControladorCategoria::class, 'index2'])->name('categorias2');
     Route::get('/novo', [ControladorCategoria::class, 'create'])->name('categorias.create');
     Route::get('/apagar/{id}', [ControladorCategoria::class, 'destroy'])->name('categorias.destroy');
     Route::get('/editar/{id}', [ControladorCategoria::class, 'edit'])->name('categorias.edit');
     Route::post('/', [ControladorCategoria::class, 'store'])->name('categorias.store');
     Route::post('/editar/{id}', [ControladorCategoria::class, 'update'])->name('categorias.update');
+    Route::get('/json', [ControladorCategoria::class, 'categoriajson'])->name('categorias.categoriajson');
+
 });
 
 Route::prefix('produtos')->group(function () {

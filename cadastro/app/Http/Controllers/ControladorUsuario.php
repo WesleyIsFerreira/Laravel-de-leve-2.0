@@ -24,7 +24,8 @@ class controladorUsuario extends Controller
             return redirect('/');
         }else{
             $req->session()->flush();
-            return response("Tudo ERRADO", 200);
+            return redirect()->back()->withErrors('Error')
+            ;
         }
     }
 }

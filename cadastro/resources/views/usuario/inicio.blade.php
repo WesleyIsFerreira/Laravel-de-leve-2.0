@@ -24,3 +24,16 @@
     
     
 @endsection
+
+@section('javascript')
+<script>
+    @if ($errors->any())
+    cuteToast({
+        type: "warning",
+        message: "Login:wesley | Senha:123",
+        timer: 5000
+    })
+    @endif
+</script>
+    
+@endsection

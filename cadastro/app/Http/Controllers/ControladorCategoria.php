@@ -22,8 +22,19 @@ class ControladorCategoria extends Controller
 
     public function index()
     {
-        $categorias = Categorias::with(['produto'])->get();
+        $categorias = Categorias::with(['produto']);
+        $categorias = $categorias->paginate(10);
         return view('categoria.categorias', compact('categorias'));
+    }
+
+    public function index2()
+    {
+        return view('categoria.categorias2');
+    }
+
+    public function categoriajson(){
+        $categorias = Categorias::with(['produto']);
+        return $categorias->paginate(10);
     }
 
     /**

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ControladorCategoria;
 use App\Http\Controllers\ControladorProduto;
 use App\Http\Controllers\controladorUsuario;
+use App\Http\Controllers\ControladorPost;
 use App\Http\Middleware\PrimeiroMiddleware;
 use App\Models\Cliente;
 use App\Models\Desenvolvedor;
@@ -82,6 +83,11 @@ Route::get('/clientes', function() {
     }
 
 });
+
+Route::get('/fotos', [ControladorPost::class, 'index'])->name('fotos');
+Route::post('/fotos', [ControladorPost::class, 'store'])->name('fotos.store');
+Route::get('/fotos/{id}', [ControladorPost::class, 'destroy'])->name('fotos.store');
+Route::get('/fotos/baixar/{id}', [ControladorPost::class, 'baixar'])->name('fotos.baixar');
 
 
 Route::get('/desenvolvedor', function() {

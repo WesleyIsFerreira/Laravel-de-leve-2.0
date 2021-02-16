@@ -16,10 +16,13 @@ class ControladorPost extends Controller
 
     public function store(Request $request)
     {
-        $post = new Post();
-        $post->email = $request->input('email');
-        $post->mensagem = $request->input('mensagem');
-        $post->arquivo = $request->file('arquivo')->store('imgPosts','public');
+        
+        $email = $request->input('email');
+        $mensagem = $request->input('mensagem');
+        $arquivo = $request->file('arquivo')->store('imgPosts','public');
+
+        //testando scope local
+        $post = Post::insere($email, $mensagem, $arquivo);
         $post->save();
         return redirect('fotos');
     }

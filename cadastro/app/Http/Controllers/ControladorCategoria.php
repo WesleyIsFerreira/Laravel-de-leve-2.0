@@ -58,7 +58,7 @@ class ControladorCategoria extends Controller
         $cat = new Categorias();
         $cat->nome = $request->input('nomeCategoria');
         $cat->save();
-        return redirect('/categorias');
+        return redirect('/categorias/2');
     }
 
     /**
@@ -84,7 +84,7 @@ class ControladorCategoria extends Controller
         if (isset($cat)){
             return view('categoria.editarCategoria', compact('cat'));
         }
-        return redirect('/categorias');
+        return redirect('/categorias/2');
     }
 
     /**
@@ -101,7 +101,7 @@ class ControladorCategoria extends Controller
             $cat->nome = $request->input('nomeCategoria');
             $cat->save();
         }
-        return redirect('/categorias');
+        return redirect('/categorias/2');
     }
 
     /**
@@ -118,11 +118,16 @@ class ControladorCategoria extends Controller
         }else{
             throw 'Moio';
         }
-        return redirect('/categorias');
+        return redirect('/categorias/2');
     }
 
     public function indexJSON(){
         $categorias = Categorias::all();
         return json_decode($categorias);
+    }
+
+    public function factory($qtd){
+         Categorias::factory($qtd)->create();
+         return redirect('/categorias/2');
     }
 }

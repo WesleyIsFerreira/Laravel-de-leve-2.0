@@ -145,9 +145,14 @@
                 paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.current_page + 1) +'</a></li>';
             }else if(resp.current_page == 1){
                 paginacao +='<li class="page-item active"><a class="page-link" href="javascript:void(0)">'+ resp.current_page +'</a></li>';
-                paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.current_page + 1) +'</a></li>';
-                paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.current_page + 2) +'</a></li>';
+
+                if(resp.last_page !=1){
+                    paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.current_page + 1) +'</a></li>';
+                    if(resp.last_page !=2)
+                        paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.current_page + 2) +'</a></li>';
+                }
             }else{
+                if((resp.last_page - 2) != 0)
                 paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.last_page - 2) +'</a></li>';
                 paginacao +='<li class="page-item"><a class="page-link" href="javascript:void(0)">'+ (resp.last_page - 1) +'</a></li>';
                 paginacao +='<li class="page-item active"><a class="page-link" href="javascript:void(0)">'+ resp.last_page +'</a></li>';

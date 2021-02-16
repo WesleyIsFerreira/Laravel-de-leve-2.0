@@ -50,6 +50,7 @@ Route::prefix('categorias')->group(function () {
     Route::post('/', [ControladorCategoria::class, 'store'])->name('categorias.store');
     Route::post('/editar/{id}', [ControladorCategoria::class, 'update'])->name('categorias.update');
     Route::get('/json', [ControladorCategoria::class, 'categoriajson'])->name('categorias.categoriajson');
+    Route::get('/factory/{qtd}', [ControladorCategoria::class, 'factory'])->name('categorias.factory');
 
 });
 

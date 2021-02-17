@@ -11,6 +11,7 @@
                         <tr>
                             <td>Código</td>
                             <td>Nome da Categoria</td>
+                            <td>Ativo</td>
                             <td>Ações</td>
                         </tr>
                     </thead>
@@ -84,6 +85,7 @@
                     linha += '<tr>'+
                                 '<td>'+resp.data[i].id +'</td>'+
                                 '<td>'+resp.data[i].nome +'</td>'+
+                                '<td>'+resp.data[i].is_active +'</td>'+
                                 '<td>'+
                                     '<a href="/categorias/editar/'+resp.data[i].id +'" class="btn btn-sm btn-primary">Edit</a>'+
                                     '<a href="/categorias/apagar/'+resp.data[i].id +'" class="btn btn-sm btn-danger">Del</a>'+

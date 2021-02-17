@@ -5,6 +5,7 @@ use App\Http\Controllers\ControladorProduto;
 use App\Http\Controllers\controladorUsuario;
 use App\Http\Controllers\ControladorPost;
 use App\Http\Middleware\PrimeiroMiddleware;
+use App\Models\Categorias;
 use App\Models\Cliente;
 use App\Models\Desenvolvedor;
 use App\Models\Endereco;
@@ -51,6 +52,13 @@ Route::prefix('categorias')->group(function () {
     Route::post('/editar/{id}', [ControladorCategoria::class, 'update'])->name('categorias.update');
     Route::get('/json', [ControladorCategoria::class, 'categoriajson'])->name('categorias.categoriajson');
     Route::get('/factory/{qtd}', [ControladorCategoria::class, 'factory'])->name('categorias.factory');
+
+    Route::get('/accessor',function(){
+        $cat = Categorias::find(110);
+        //Accessor
+        //return $cat->nome;
+        return $cat->nome_batata;
+    })->name('categorias.factory');
 
 });
 
